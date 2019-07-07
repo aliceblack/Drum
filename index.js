@@ -21,9 +21,10 @@ function beat() {
     oscillator.stop(audioContext.currentTime + 0.5);
 }
 
+
+
 function playSteps(steps, tagId) {
     let element = document.getElementById(tagId);
-
     let i = 0;                     
     function loop () {       
        setTimeout(function () { 
@@ -42,6 +43,8 @@ function playSteps(steps, tagId) {
     loop();
 }
 
+
+
 function getTrackFromDrumBot() {
     var init = { method: 'GET',
                mode: 'cors',
@@ -50,14 +53,16 @@ function getTrackFromDrumBot() {
     .then(response => {
       response.json().then(body=>{
         console.log(body.tracks);
-        playSteps(body.tracks[0].steps,'stepsSequence_0');
-        playSteps(body.tracks[1].steps,'stepsSequence_1');
-        playSteps(body.tracks[2].steps,'stepsSequence_2');
-        playSteps(body.tracks[2].steps,'stepsSequence_3');
+        playSteps(body.tracks[0].steps,'snare');
+        playSteps(body.tracks[1].steps,'clap');
+        playSteps(body.tracks[2].steps,'cowbell');
+        playSteps(body.tracks[2].steps,'kick');
       });
     })
     .catch(error => console.log(error))
 }
+
+
 
 function sequence(){
     getTrackFromDrumBot();
