@@ -21,19 +21,23 @@ function beat() {
     oscillator.stop(audioContext.currentTime + 0.5);
 }
 
-function playSteps(steps) {
-    let element = document.getElementById("stepsSequence");
+function playSteps(steps, tagId) {
+    let element = document.getElementById(tagId);
 
     let i = 0;                     
     function loop () {       
        setTimeout(function () { 
             if (i < steps.length) {
-                element.innerHTML += ' '+steps[i];
-                if(steps[i]){beat();}   
+                if(steps[i]){
+                    element.innerHTML += ' <i class="material-icons">music_note</i>';
+                    beat();
+                }else{
+                    element.innerHTML += ' <i class="material-icons"> panorama_fish_eye </i>';
+                }
                 loop();
             }  
             i++;                  
-       }, 1000)
+       }, 200)
     }
     loop();
 }
@@ -45,8 +49,11 @@ function getTrackFromDrumBot() {
     fetch("https://api.noopschallenge.com/drumbot/patterns/nipnop",init)
     .then(response => {
       response.json().then(body=>{
-        console.log(body.tracks[0].steps);
-        playSteps(body.tracks[0].steps);
+        console.log(body.tracks);
+        playSteps(body.tracks[0].steps,'stepsSequence_0');
+        playSteps(body.tracks[1].steps,'stepsSequence_1');
+        playSteps(body.tracks[2].steps,'stepsSequence_2');
+        playSteps(body.tracks[2].steps,'stepsSequence_3');
       });
     })
     .catch(error => console.log(error))
